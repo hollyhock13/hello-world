@@ -1,13 +1,6 @@
+openssl 生成X509 V3的根证书及签名证书
 
-# 利用openssl命令生成公钥跟密钥
-openssl genrsa -des3 -passout pass:x -out cert.pass.key 2048
-openssl rsa -passin pass:x -in cert.pass.key -out cert.key
-openssl req -new-key cert.key -out cert.csr
-openssl x509 -req -days 365 -in cert.csr -signkey server.key -out cert.crt
-# 将crt跟key合并生成pem文件
-cat cert.crt cert.key> cert.pem
-# 删除掉我们不需要用到的文件
-rm -rf cert.crt cert.csr
+在测试的时候有时需要使用证书。因此使用OpenSSL创建自签名根证书，使用根证书签发证书显得很重要。
 
 1、生成根证书及自签名证书
 1.创建根证私钥
@@ -20,10 +13,84 @@ rm -rf cert.crt cert.csr
     openssl x509 -req   -extfile /etc/pki/tls/openssl.cnf -extensions v3_req  -in root-req.csr -out root-cert.cer -signkey root-key.key -CAcreateserial -days 3650   
 
     重要说明： -extfile /etc/pki/tls/openssl.cnf -extensions v3_req  参数是生成 X509 V3 版本的证书的必要条件。 /etc/pki/tls/openssl.cnf  是系统自带的OpenSSL配置文件，该配置文件默认开启 X509 V3 格式。下同。
+
+4.导出p12格式根证书
+    openssl pkcs12 -export -clcerts -in root-cert.cer -inkey root-key.key -out root.p12
+
+
+2、使用根证书签发客户端证书    
+1.生成客户端key
+    openssl genrsa -out client-key.key 1024
+
+2.生成客户端请求文件
+    openssl req -new -out client-req.csr -key client-key.key
+
+3.生成客户端证书,使用根证书签名
+    openssl x509 -req -extfile /etc/pki/tls/openssl.cnf -extensions v3_req -in client-req.csr -out client-cert.cer -signkey client-key.key -CA root-cert.cer  -CAkey root-key.key -CAcreateserial -days 3650
+
+4.生成客户端p12格式根证书
+    openssl pkcs12 -export -clcerts -in client-cert.cer -inkey client-key.key -out client.p12
+
+3、查看证书
+openssl x509  -in client-cert.cer -text -noout
+证书显示如下：
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 13373217044989835800 (0xb997360c4ed17a18)
+    Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=CN, ST=bj, L=Default City, O=Default Company Ltd
+        Validity
+            Not Before: May 16 02:25:21 2018 GMT
+            Not After : May 13 02:25:21 2028 GMT
+        Subject: C=CN, ST=bj, L=bj, O=bj, OU=bj, CN=bj/emailAddress=bj
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (1024 bit)
+                Modulus:
+                    00:b1:3d:63:35:52:a6:75:c1:9c:2e:5f:88:df:7e:
+                    fc:29:a9:d4:bb:91:e5:27:b8:92:cc:63:7d:d8:7a:
+                    b0:3f:7c:43:f8:e7:f9:ed:b7:f6:26:00:d1:ee:68:
+                    20:6a:80:bc:0f:0d:3f:94:3f:b2:4d:ab:49:3f:f6:
+                    88:db:5a:0c:f4:41:5d:d5:d3:34:27:b6:87:c0:65:
+                    c6:f6:0c:e3:b1:ea:59:24:ff:14:48:6a:d2:51:2a:
+                    61:a9:c9:24:cc:e5:6a:ba:d7:83:76:1a:54:6d:a6:
+                    01:f6:75:98:4c:45:6d:a1:ad:9c:88:1b:d7:ae:c6:
+                    a4:1e:99:ba:44:ea:52:1b:37
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Key Usage: 
+                Digital Signature, Non Repudiation, Key Encipherment
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Key Usage: 
+                Digital Signature, Non Repudiation, Key Encipherment
+    Signature Algorithm: sha1WithRSAEncryption
+         3f:e5:fd:ab:08:2e:37:6c:5f:12:aa:0c:b4:28:da:2e:7a:c7:
+         0a:43:89:81:1a:33:c2:d7:dd:95:c5:d6:a9:4c:12:d2:54:ee:
+         ec:9a:15:93:ab:a6:59:40:2e:a8:ad:02:19:69:d3:49:17:08:
+         f5:61:e1:68:0d:1b:ac:0f:9e:eb:a7:03:fa:9d:64:1f:42:cd:
+         24:58:ce:ad:6c:14:e2:78:77:42:37:1f:be:a9:a3:e1:bb:43:
+         20:05:a3:9c:94:98:49:c0:f3:09:ce:11:f6:17:cf:3f:07:da:
+         a0:fc:cd:0c:6f:09:d1:3c:5f:5d:c6:81:c8:d5:62:59:3a:9e:
+         39:49
 ————————————————
 版权声明：本文为CSDN博主「zhang_dawei666」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/xiangguiwang/article/details/80333728
 
+
+
+# 利用openssl命令生成公钥跟密钥
+openssl genrsa -des3 -passout pass:x -out cert.pass.key 2048
+openssl rsa -passin pass:x -in cert.pass.key -out cert.key
+openssl req -new-key cert.key -out cert.csr
+openssl x509 -req -days 365 -in cert.csr -signkey server.key -out cert.crt
+# 将crt跟key合并生成pem文件
+cat cert.crt cert.key> cert.pem
+# 删除掉我们不需要用到的文件
+rm -rf cert.crt cert.csr
 
 eg:
 openssl genrsa -des3 -passout pass:x -out cert.pass.key 2048
