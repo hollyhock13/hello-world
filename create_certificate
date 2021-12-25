@@ -1,0 +1,91 @@
+
+
+
+openssl genrsa -des3 -passout pass:x -outcert.pass.key2048
+openssl genrsa -des3 -passout pass:x -outcert.pass.key2048
+openssl genrsa -des3 -passout pass:x
+ls
+openssl genrsa -des3 -passout
+openssl genrsa -des3 -passout pass
+openssl genrsa -des3 -passout pass:zz
+openssl genrsa -des3 -passout pass:zz
+openssl genrsa -des3 -passout pass:zz
+openssl genrsa -des3 -passout pass:x -out cert.pass.key2048
+ls
+openssl genrsa
+ls
+openssl genrsa -des3
+openssl genrsa -des3 -p
+ls
+cat cert.pass.key2048
+openssl genrsa -des3
+ls
+openssl genrsa -des3 -passout xyzw -out cert.pass.key 2048
+openssl genrsa -des3 -passout xyz:w -out cert.pass.key 2048
+openssl genrsa -des3 -passout paaa:w -out cert.pass.key 2048
+openssl genrsa -des3
+openssl genrsa -des3 -passout pasa:w -out cert.pass.key 2048
+openssl genrsa -des3 -passout pass:w -out cert.pass.key 2048
+ls
+cat cert.pass.key
+cat cert.pass.key2048
+openssl genrsa -des3 -passout pass:w -out cert.pass.key
+openssl genrsa -des3 -passout pass:w -out cert.pass.key  f
+ls
+rm cert.pass.key*
+ls
+rm cert.pass.key
+ls
+openssl genrsa -des3 -passout paass:w -out cert.pass.key  f
+openssl genrsa -des3 -passout pass:xyzw -out cert.pass.key
+ls
+cat cert.pass.key
+
+
+cat cert.pass.key2048
+openssl genrsa -des3 -passout pass:w -out cert.pass.key
+openssl genrsa -des3 -passout pass:w -out cert.pass.key  f
+ls
+rm cert.pass.key*
+ls
+rm cert.pass.key
+ls
+openssl genrsa -des3 -passout paass:w -out cert.pass.key  f
+openssl genrsa -des3 -passout pass:xyzw -out cert.pass.key
+ls
+cat cert.pass.key
+openssl rsa -p
+openssl rsa -passin pass:xyzw -in cert.pass.key -out cert.key
+ls
+cat cert.key
+cat cert.pass.key
+openssl rsa -passin pass:x -in cert.pass.key -out test
+cd /home/leon/
+ls
+openssl req -new-key
+ls
+openssl req -new-key cert.key -out cert.csr
+openssl req -new -key cert.key -out cert.csr
+ls
+cat cert.csr
+openssl x509 -req -days365 -in cert.csr -signkey server.key -out cert.crt
+openssl x509 -req -days 365 -in cert.csr -signkey server.key -out cert.crt
+ls
+openssl x509 -req -days 365 -in cert.csr -signkey cert.key -out cert.crt
+cat cert.crt
+cat cert.crt  cert.key  > cert.pem
+cat cert.key
+cat cert.pem
+openssl x509 -in cert.pem  -text -noout
+cat cert.pem
+
+
+openssl s_server -accept 2009 -key serverprikey.pem -cert server.pem -ssl3 -cipher EXP-KRB5-RC4-MD5 -chain -debug -msg
+openssl s_server -accept 2009 -key waf_default.key -cert waf_default.crt  -tls1_2 -cipher EXP-KRB5-RC4-MD5 -chain -debug -msg
+openssl s_server -accept 2009 -key waf_default.key -cert waf_default.crt  -tls1_2  -chain -debug -msg
+/opt/cloud/WAF-Engine/waflib/openssl/bin/openssl s_server -accept 2009 -key waf_default.key -cert waf_default.crt  -tls1_2  -chain -debug -msg
+/opt/cloud/WAF-Engine/waflib/openssl/bin/openssl s_server -accept 2009 -key waf_default.key -cert waf_default.crt  -tls1_2   -debug -msg
+openssl s_server -accept 2009 -key waf_default.key -cert waf_default.crt  -tls1_2  -chain -debug -msg
+/opt/cloud/WAF-Engine/waflib/openssl/bin/openssl s_server -accept 2009 -key waf_default.key -cert waf_default.crt  -tls1_2   -debug -msg
+/opt/cloud/WAF-Engine/waflib/openssl/bin/openssl s_server -accept 2009 -key waf_default.key -cert waf_default.crt  -tls1_2   -debug -msg
+
