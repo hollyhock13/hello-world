@@ -1,4 +1,18 @@
 
+3.生成SSL/TLS安全证书
+要配置HTTP 2.0就需要启动HTTPS，那就需要生成一个SSL/TLS证书，而OpenSSL正好可以做这件事情，买不起证书但自己造一个来临时用还是可以的，直接执行下面命令：
+# 切换到nginx的根目录（我这里是home/kingdom/env/nginx-http2/nginx-http2，请根据上一步编译时候指定的--prefix对应修改）
+cd home/kingdom/env/nginx-http2/nginx-http2
+cd conf
+# 利用openssl命令生成公钥跟密钥
+openssl genrsa -des3 -passout pass:x -out cert.pass.key2048
+openssl rsa -passin pass:x -incert.pass.key -out cert.key
+openssl req -new-key cert.key-out cert.csr
+openssl x509 -req -days365 -in cert.csr -signkey server.key -out cert.crt
+# 将crt跟key合并生成pem文件
+cat cert.crt cert.key> cert.pem
+# 删除掉我们不需要用到的文件
+rm -rf cert.crt cert.csr
 
 
 openssl genrsa -des3 -passout pass:x -outcert.pass.key2048
