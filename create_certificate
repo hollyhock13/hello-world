@@ -139,3 +139,69 @@ openssl s_server -accept 2009 -key waf_default.key -cert waf_default.crt  -tls1_
 /opt/cloud/WAF-Engine/waflib/openssl/bin/openssl s_server -accept 2009 -key waf_default.key -cert waf_default.crt  -tls1_2   -debug -msg
 /opt/cloud/WAF-Engine/waflib/openssl/bin/openssl s_server -accept 2009 -key waf_default.key -cert waf_default.crt  -tls1_2   -debug -msg
 
+
+
+
+pfx:
+openssl pkcs12 -export -out certificate.pfx -inkey privateKey.key -in certificate.crt -certfile CACert.crt
+
+history:
+  941  openssl  pkcs12 -in c.crt -inkey c.key -out a.pfx 
+  942  ls
+  943  openssl  pkcs12 -in c.crt -inkey c.key -export  -out a.pfx 
+  944  openssl  pkcs12 -info -in a.pfx 
+  945  openssl  pkcs12 -in c.crt -inkey c.key -export  -out a.pfx 
+  946  openssl  pkcs12 -info -in a.pfx 
+  947  openssl  pkcs12 -info -in a.pfx 
+  948  openssl  pkcs12 -info -in a.pfx 
+  949  openssl  pkcs12 -in c.crt -inkey c.key -export  -out a.pfx 
+  950  openssl  pkcs12 -info -in a.pfx 
+  951  openssl  pkcs12 -info -in a.pfx 
+  952  pk12util -i a.pfx -d /etc/pki/nssdb/key3.db  
+  953  pk12util -i a.pfx -d /etc/pki/nssdb/z.db
+  954  pk12util -i a.pfx -d /etc/pki/nssdb
+  955  certutil -L -d /etc/pki/nssdb -n 
+  956  certutil -L -d /etc/pki/nssdb 
+  957  openssl  pkcs12 -info -in a.pfx 
+  958  certutil help rename 
+  959  certutil --rename -d a.pfx
+  960  certutil --rename '' a  -d a.pfx
+  961  certutil --rename '' --new-n a  -d a.pfx
+  962  certutil -L -d /etc/pki/nssdb -n u,u,u
+  963  certutil -L -d /etc/pki/nssdb -n 
+  964  certutil -L -d /etc/pki/nssdb 
+  965  nsscertutil -L -d /etc/pki/nssdb
+  966  openssl  pkcs12 -in c.crt -inkey c.key -export  -out a.pfx   -name "leon"
+  967  openssl  pkcs12 -info -in a.pfx 
+  968  openssl  pkcs12 -info -in a.pfx 
+  969  pk12util -i a.pfx -d /etc/pki/nssdb
+  970  certutil -L -d /etc/pki/nssdb
+  971  tailf logs/error.log 
+  972  waf
+  973  cat rules/upstream 
+  974  cat rules/upstream 
+  975  cat /etc/hosts
+  976  vi /etc/hosts
+  977  curl -v  http://www.leon-209.com/fn=../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../etc/passwd  
+  978  curl http://www.leon-209.com
+  979  curl -v  http://www.leon-209.com?fn=../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../etc/passwd  
+  980  curl -v  http://www.leon-209.com/test?fn=../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../etc/passwd  
+  981  ngx
+  982  vi logs/access.log 
+  983  curl -v  http://www.leon-209.com/test?fn=../etc/passwd  
+  984  curl -v  http://www.leon-209.com/test?fn=../etc/passwd  
+  985  waf
+  986  cat rules/upstream  |  json  
+  987  cat rules/upstream  |  python -m json.tool
+  988  vi rules/policy 
+  989  certutil -L -d /etc/pki/nssdb  -D
+  990  certutil  -d /etc/pki/nssdb  -D
+  991  pk12util -i a.pfx -d /home/leon/pki
+  992  mkdir  /home/leon/pki
+  993  pk12util -i a.pfx -d /home/leon/pki
+  994  pk12util -i a.pfx -d /home/leon/pki
+  995  certutil  -L   -d /home/leon/pki
+  996  curl  -vvvvv -s -k --cert leon    -X POST -vv https://10.63.36.209:1050/wafupdate/upstream?option=1 -d '{"wyw003.milesaway.club":{"bind_ip_version":1,"hostid":"2b9183ac15eb4129b8ea1067dea3de0e","http_server":[{"alive":true,"health_check":true,"host":"192.168.17.65","port":80,"protocol":"HTTP","type":"ip"}],"https_server":[{"alive":true,"http2":true,"host":"192.168.17.65","port":443,"protocol":"HTTP","type":"ip"}],"timestamp":1584944388011}}' -H "Content-Type: application/json"
+  997  export SSL_DIR=/home/leon/pki
+  998  curl  -vvvvv -s -k --cert leon    -X POST -vv https://10.63.36.209:1050/wafupdate/upstream?option=1 -d '{"wyw003.milesaway.club":{"bind_ip_version":1,"hostid":"2b9183ac15eb4129b8ea1067dea3de0e","http_server":[{"alive":true,"health_check":true,"host":"192.168.17.65","port":80,"protocol":"HTTP","type":"ip"}],"https_server":[{"alive":true,"http2":true,"host":"192.168.17.65","port":443,"protocol":"HTTP","type":"ip"}],"timestamp":1584944388011}}' -H "Content-Type: application/json"
+  
